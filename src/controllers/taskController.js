@@ -1,4 +1,4 @@
-import { createTaskService, updateTaskService } from '../services/taskService';
+import { createTaskService, updateTaskService } from '../services/taskService.js';
 
 export async function createTaskController (req, res) {
     const data = req.body;
