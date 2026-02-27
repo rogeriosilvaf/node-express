@@ -22,7 +22,7 @@ Evoluções futuras: banco de dados, testes, autenticação e deploy.
 ## Arquitetura
 
 O projeto segue separação de responsabilidades:
-
+```
 src/
  ├── controllers/   # Camada HTTP (req / res)
  ├── services/      # Regras de negócio
@@ -30,7 +30,7 @@ src/
  ├── routers/       # Definição das rotas
  ├── app.js         # Configuração da aplicação
  └── server.js      # Inicialização do servidor
-
+```
 ---
 
 ## Como Executar o Projeto
