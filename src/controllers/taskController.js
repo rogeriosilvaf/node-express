@@ -1,4 +1,9 @@
-import { createTaskService, updateTaskService } from '../services/taskService.js';
+import { createTaskService, deleteTaskService, getAllTasksService, updateTaskService } from '../services/taskService.js';
+
+export async function getAllTasksController (req, res) {
+    const task = await getAllTasksService();
+    return res.status(200).json(task);
+}
 
 export async function createTaskController (req, res) {
     const data = req.body;
@@ -47,4 +52,22 @@ export async function updateTaskController (req, res) {
 
         return res.status(500).json({error: 'Internal server error'});
     }
+}
+
+export async function deleteTaskController(req, res) {
+    try {
+        await deleteTaskService(req.params.taskId);
+        return res.status(204).send()
+
+    } catch (error) {
+            if (error.type === "NOT_FOUND") {
+            return res.status(404).json({error: error.message});
+        }
+
+        if (error.type === "INVALID_STATE") {
+            return res.status(409).json({error: error.message});
+        }
+        
+        return res.status(500).json({error: 'Internal server error'});
+    }    
 }

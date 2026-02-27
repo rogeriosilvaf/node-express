@@ -1,4 +1,8 @@
-import { createTask, getTaskById, updateTask } from '../repositories/taskRepository.js'
+import { createTask, deleteTask, getAllTasks, getTaskById, updateTask } from '../repositories/taskRepository.js'
+
+export async function getAllTasksService() {
+    return await getAllTasks();
+}
 
 export async function createTaskService({title}) {
     
@@ -36,4 +40,24 @@ export async function updateTaskService({taskId, data}) {
     const updatedTask = await updateTask(taskId, data);
 
     return updatedTask;
+}
+
+export async function deleteTaskService(taskId) {
+    const task = await getTaskById(taskId);
+
+    if (!task) {
+        throw {
+            type: "NOT_FOUND",
+            message: "Task not found",
+        };
+    }
+
+    if (task.status === "COMPLETED") {
+        throw {
+            type: "INVALID_STATE",
+            message: "Complated task cannot to be deleted",
+        };
+    }
+
+    await deleteTask(taskId);
 }

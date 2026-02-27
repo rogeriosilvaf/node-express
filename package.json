@@ -2,26 +2,23 @@
   "name": "rest-express",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rogeriopedrof/rest-express.git"
+    "url": "git+https://github.com/rogeriosilvaf/rest-express.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "bugs": {
-    "url": "https://github.com/rogeriopedrof/rest-express/issues"
+    "url": "https://github.com/rogeriosilvaf/rest-express/issues"
   },
-  "homepage": "https://github.com/rogeriopedrof/rest-express#readme",
+  "homepage": "https://github.com/rogeriosilvaf/rest-express#readme",
   "dependencies": {
-    "dotenv": "^17.2.3",
-    "express": "^5.2.1",
-    "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
+    "express": "^5.2.1"
   }
 }

@@ -1,4 +1,4 @@
-import express, { json } from "express";
+import express from "express";
 import router from "./routers/taskRouter.js";
 
 const app = express();

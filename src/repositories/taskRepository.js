@@ -1,52 +1,50 @@
-import { db } from "../data/sqlite";
+let tasks = [];
+let idCounter = 0;
+
+export async function createTask({ title }) {
+    const newTask = {
+        id: idCounter++,
+        title,
+        status: "PENDING",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    };
+
+    tasks.push(newTask);
+    return newTask;
+}
 
 export async function getTaskById(id) {
-    return db.run(
-        "SELECT * FROM tasks WHERE id = ?",
-        [id]
-    );
+    return tasks.find(t => t.id === Number(id));
+}
+
+export async function getAllTasks() {
+    return tasks;
 }
 
 export async function updateTask(id, data) {
-    const fields = [];
-    const values = [];
+    const task = await getTaskById(id);
+
+    if (!task) return null;
 
     if (data.title !== undefined) {
-        fields.push("title=?");
-        values.push(data.title);
+        task.title = data.title;
     }
 
     if (data.status !== undefined) {
-        fields.push("status=?");
-        values.push(data.status);
+        task.status = data.status;
     }
 
-    if (fields.length === 0) {
-        return getTaskById(id);
-    }
+    task.updatedAt = new Date();
 
-    values.push(id);
-
-    await db.run(
-        `UPDATE tasks
-        SET ${fields.join(", ")},   
-            upadateAt = CURRENT_TIMESTAMP
-        WHERE id = ?`,
-        values
-    );
-
-    return getTaskById(id);
+    return task;
 }
 
-export async function createTask({title}) {
-    const result = await db.run(
-        "INSERT INTO tasks (title) VALUES (?)",
-        [title]
-    );
+export async function deleteTask(id) {
+    const index = tasks.find(t => t.id === Number(id))
 
-    return {
-        id: result.lastID,
-        title,
-        status: "PENDING",
-    };
+    if (index === -1) return false;
+
+    tasks.splice(index, 1);
+    return true;
 }
