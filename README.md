@@ -48,5 +48,6 @@ npm install
 # Executar o servidor
 npm run dev
 
+---
 
-(Imcompleto...)
+(Em desenvolvimento...)
