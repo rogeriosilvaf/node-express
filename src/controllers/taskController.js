@@ -11,7 +11,7 @@ export async function createTaskController (req, res) {
     try {
         const createTask = await createTaskService(data);
 
-        return res.status(200).json(createTask);
+        return res.status(201).json(createTask);
 
     } catch (error) {
         if (error.type === "INVALID_INPUT") {

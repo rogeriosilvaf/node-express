@@ -41,7 +41,7 @@ export async function updateTask(id, data) {
 }
 
 export async function deleteTask(id) {
-    const index = tasks.find(t => t.id === Number(id))
+    const index = tasks.findIndex(t => t.id === Number(id))
 
     if (index === -1) return false;
 
