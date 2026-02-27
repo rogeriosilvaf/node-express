@@ -40,12 +40,12 @@ Pré-requisitos
 - Node.js (v18 ou superior)
 - npm
 
-Passos
+## Passos
 
-# Instalar dependências
+### Instalar dependências
 npm install
 
-# Executar o servidor
+### Executar o servidor
 npm run dev
 
 ---
