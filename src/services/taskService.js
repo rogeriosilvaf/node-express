@@ -1,4 +1,4 @@
-import { getAllTasks, createTask, getTaskById, updateTask } from '../repositories/taskRepository.js'
+import { getAllTasks, createTask, getTaskById, updateTask, deleteTask } from '../repositories/taskRepository.js'
 
 export async function getAllTasksService() {
     return await getAllTasks();
@@ -51,13 +51,13 @@ export async function deleteTaskService(taskId) {
             message: "Task not found",
         };
     }
-
+/*
     if (task.status === "COMPLETED") {
         throw {
             type: "INVALID_STATE",
             message: "Complated task cannot to be deleted",
         };
     }
-
+*/
     await deleteTask(taskId);
 }
