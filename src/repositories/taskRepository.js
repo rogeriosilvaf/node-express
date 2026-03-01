@@ -1,45 +1,52 @@
-let tasks = [];
-let idCounter = 0;
+import pool from "../config/database.js";
 
-export async function createTask({ title }) {
-    const newTask = {
-        id: idCounter++,
-        title,
-        status: "PENDING",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-    };
-
-    tasks.push(newTask);
-    return newTask;
+export async function createTask({title}) {
+    const result = await pool.query(`
+        INSERT INTO tasks (title)
+        VALUES ($1)
+        RETURNING id, title, status, created_at, updated_at;
+        `,
+        [title]
+    );
+    return result.rows[0];
 }
 
 export async function getTaskById(id) {
-    return tasks.find(t => t.id === Number(id));
+    const result = await pool.query(`
+
+        SELECT id, title, status, created_at, update_at
+        FROM tasks
+        WHERE id = $1
+        `,
+        [id]
+    );
+    return result.rows[0];
 }
 
 export async function getAllTasks() {
-    return tasks;
+    const result = await pool.query(`
+        SELECT title FROM tasks;
+        `);
+        return result.rows;
 }
 
 export async function updateTask(id, data) {
-    const task = await getTaskById(id);
+    const {title, status} = data;
+    const result = await pool.query(`
+        UPDATE tasks
+        SET
+            title = COALESCE($1, title),
+            status = COALESCE($2, status),
+            updated_at = NOW()
+        WHERE id = $3
+        RETURNING id, title, status, created_at, updated_at;
+        `,
+        [title ?? null, status ?? null, id]
+    );
 
-    if (!task) return null;
-
-    if (data.title !== undefined) {
-        task.title = data.title;
-    }
-
-    if (data.status !== undefined) {
-        task.status = data.status;
-    }
-
-    task.updatedAt = new Date();
-
-    return task;
+    return result.rows[0];
 }
-
+/*
 export async function deleteTask(id) {
     const index = tasks.findIndex(t => t.id === Number(id))
 
@@ -48,3 +55,4 @@ export async function deleteTask(id) {
     tasks.splice(index, 1);
     return true;
 }
+*/

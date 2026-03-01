@@ -1,4 +1,4 @@
-import { createTask, deleteTask, getAllTasks, getTaskById, updateTask } from '../repositories/taskRepository.js'
+import { getAllTasks, createTask, getTaskById, updateTask } from '../repositories/taskRepository.js'
 
 export async function getAllTasksService() {
     return await getAllTasks();
